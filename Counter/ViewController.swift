@@ -22,14 +22,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var historyTextView: UITextView!
     
     
-    // Actions
+    // MARK: IBActions
     @IBAction func disButtonDidTap(_ sender: Any) {
-        count -= 1
-        logger(text: "значение изменено на -1")
+        if count > 0 {
+            count -= 1
+            logger(text: "значение изменено на -1")
+        }
     }
     @IBAction func refreshButtonDidTap(_ sender: Any) {
-        count = 0
-        logger(text: "значение сброшено")
+        if count > 0 {
+            count = 0
+            logger(text: "значение сброшено")
+        }
     }
     @IBAction func impButtonDidTap(_ sender: Any) {
         count += 1
