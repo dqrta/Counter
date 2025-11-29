@@ -10,60 +10,38 @@ import Foundation
 
 class ViewController: UIViewController {
     
+    // MARK: - Overrides
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     // MARK: - IBOutlets
     // Labels
-    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet private weak var countLabel: UILabel!
     
     // Buttons
-    @IBOutlet weak var disButton: UIButton!
-    @IBOutlet weak var refreshButton: UIButton!
+    @IBOutlet private weak var disButton: UIButton!
+    @IBOutlet private weak var refreshButton: UIButton!
     
     // Text Views
-    @IBOutlet weak var historyTextView: UITextView!
+    @IBOutlet private weak var historyTextView: UITextView!
     
     
-    // MARK: IBActions
-    @IBAction func disButtonDidTap(_ sender: Any) {
-        if count > 0 {
-            count -= 1
-            logger(text: "значение изменено на -1")
-        }
-    }
-    @IBAction func refreshButtonDidTap(_ sender: Any) {
-        if count > 0 {
-            count = 0
-            logger(text: "значение сброшено")
-        }
-    }
-    @IBAction func impButtonDidTap(_ sender: Any) {
-        count += 1
-        logger(text: "значение изменено на +1")
-    }
-    
-    
-    // MARK: Properties
-    var isDis: Bool = false {
-        didSet {
-            if isDis {disButton.isEnabled = true}
-            else {disButton.isEnabled = false}
-        }
-    }
-    
-    var count: Int = 0 {
+    // MARK: - Properties
+
+    private var count: Int = 0 {
         didSet {
             refreshLabel()
             if count == 0 {
-                isDis = false
                 isRefresh = false
             }
             if count == 1 {
-                isDis = true
                 isRefresh = true
             }
         }
     };
     
-    var isRefresh: Bool = false {
+    private var isRefresh: Bool = false {
         didSet {
             if isRefresh {refreshButton.isEnabled = true}
             else {refreshButton.isEnabled = false}
@@ -71,8 +49,8 @@ class ViewController: UIViewController {
     }
     
     
-    // MARK: Utils
-    func logger(text: String) {
+    // MARK: - Utils
+    private func logger(text: String) {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
@@ -81,18 +59,33 @@ class ViewController: UIViewController {
         scrollToBottom()
     }
     
-    func refreshLabel() {
+    private func refreshLabel() {
         countLabel.text = String(count)
     }
-        
-    func scrollToBottom() {
+    
+    private func scrollToBottom() {
         let range = NSRange(location: historyTextView.text.count - 1, length: 1)
         historyTextView.scrollRangeToVisible(range)
     }
     
-    // MARK: Overrides
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    // MARK: - IBActions
+    @IBAction private func disButtonDidTap(_ sender: Any) {
+        if count > 0 {
+            count -= 1
+            logger(text: "значение изменено на -1")
+        } else {
+            logger(text: "попытка уменьшить значение счётчика ниже 0")
+        }
+    }
+    @IBAction private func refreshButtonDidTap(_ sender: Any) {
+        if count > 0 {
+            count = 0
+            logger(text: "значение сброшено")
+        }
+    }
+    @IBAction private func impButtonDidTap(_ sender: Any) {
+        count += 1
+        logger(text: "значение изменено на +1")
     }
 }
-
