@@ -1,4 +1,4 @@
 # Приложения для подсчета "Counter"
 
 ### Внешний вид:
-<img atl="Внешний вид" src="img/view.png"/>
+<img atl="Внешний вид" src="img/view.png" width="200" />
